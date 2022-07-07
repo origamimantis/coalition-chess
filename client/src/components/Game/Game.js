@@ -8,6 +8,7 @@ import {player2angle} from "./Draw.js"
 
 import UserList from "./UserList"
 import Canvas from "./Canvas"
+import Tooltip from "./Tooltip"
 
 
 import king from "../../assets/king.png"
@@ -125,6 +126,7 @@ export default function Game() {
       <Canvas/>
       <UserList/>
     </div>
+    <Tooltip/>
     </>
   );
 

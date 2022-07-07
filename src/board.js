@@ -92,7 +92,7 @@ class Board
       y: c2-1,
       vx: c1-1,
       vy: c2-1,
-      dragging: false,
+      dragging: null,
       type: type,
       color: color
     };

@@ -26,13 +26,10 @@ const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 root.render(<Rooter callback={() => console.log("renderered")} />);
 
-window.onbeforeunload = function () {
-   if (getVar("held") === true)
-     socket.emit("disconnectpiece", ...getVar("heldPiece"))
-   socket.disconnect()
+window.onbeforeunload = function ()
+{
+  socket.disconnect()
 }
 
 window.onclick = handleClick
 document.onmousemove = handleMouseMove
-
-

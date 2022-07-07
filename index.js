@@ -127,8 +127,6 @@ function addSocket(id, name, socket)
   else if (l == 1)  team = c.BLACK;
 
   rooms[id].addUser({name:name, team:team, socket:socket})
-
-  socket.currentRoom = id;
 }
 
 function removeSocket(socket)
@@ -210,16 +208,18 @@ io.on("connection", (socket)=>
       return
     }
 
-    if (room !== undefined)
-      room.delUserName(username)
+    removeSocket(socket);
 
-    addSocket(roomname, username, socket);
-
-    socket.xy = [0,0]
+    if (collision === null)
+      addSocket(roomname, username, socket);
 
     // reconnect
-    //else if (collision.socket === null)
-    //  collision.socket = socket;
+    else if (collision.socket === null)
+      collision.socket = socket;
+
+    socket.currentRoom = roomname;
+    socket.name = username;
+    socket.xy = [0,0]
 
     res({result:true, message:""})
 
@@ -249,10 +249,13 @@ io.on("connection", (socket)=>
     let p = b.pieces[pieceid]
     p.vx = x - 0.5
     p.vy = y - 0.5
-    p.dragging = true
+    p.dragging = socket.name
 
-    if (p.y !== null && p.x !== null)
+    if (p.y !== null && p.x !== null &&
+       b.grid[p.y] !== undefined && b.grid[p.y][p.x] !== undefined)
+    {
       b.grid[p.y][p.x] = null
+    }
 
   });
 
@@ -299,19 +302,26 @@ io.on("connection", (socket)=>
     p.y = ty
     p.vx = vx
     p.vy = vy
-    p.dragging = false
+    p.dragging = null
     if (tx !== null)
       b.grid[ty][tx] = piece
   });
-  socket.on('disconnectpiece',(pieceid, piece)=> {
-    let p = b.pieces[pieceid]
-    p.dragging = false
-  })
-
 
   socket.on('disconnect',()=> {
-    console.log("xd")
     let a = rooms[socket.currentRoom]
+    if (a !== undefined)
+    {
+      let ps = a.board.pieces
+      for (let p of Object.values(ps))
+      {
+	if (p.dragging !== null && p.dragging == socket.name)
+	{
+	  p.x = p.vx
+	  p.y = p.vy
+	  p.dragging = null
+	}
+      }
+    }
     removeSocket(socket);
     users_update(socket.currentRoom);
   });

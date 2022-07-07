@@ -75,7 +75,7 @@ export function drawBoard()
     // draw dragged pieces on top
     for (let piece of Object.values(pieces))
     {
-      if (piece.dragging == false)
+      if (piece.dragging === null)
 	drawpiece(piece)
       else
 	dragged.push(piece)

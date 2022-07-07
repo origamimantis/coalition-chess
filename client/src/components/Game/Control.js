@@ -22,7 +22,7 @@ function relcoords(e, snap = true)
 }
 function clicked(p, x, y)
 {
-  if (p.dragging == true)
+  if (p.dragging !== null)
     return [false, 100]
 
   let i = (x >= p.vx && x < (p.vx+1) && y >= p.vy && y < (p.vy+1))
@@ -60,7 +60,7 @@ export function handleClick(e)
 {
   if (getVar("inRoom") !== true)
     return
-
+  
 
   let [rx, ry] = relcoords(e)
   let gxy = boardcoords(rx,ry)
@@ -137,6 +137,26 @@ export function handleMouseMove(e)
   setVar("prevTime", now)
   setVar("lastUpdate", newclock)
 
-  
+}
+
+export function handleRightClick(e)
+{
+  if (getVar("inRoom") !== true)
+    return
+
+  e.preventDefault()
+
+  let [rx, ry] = relcoords(e)
+  let gxy = boardcoords(rx,ry)
+  let [rgx,rgy] = rot(...gxy, -player2angle(getVar("playernum")))
+  let rgxy = [rgx, 10-rgy]
+
+  let [id,p] = getPieceAt(...rgxy)
+
+  if (p !== null)
+  {
+    return p.type
+  }
+  return null
 
 }

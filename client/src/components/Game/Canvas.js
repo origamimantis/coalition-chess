@@ -53,11 +53,10 @@ export default function Canvas() {
   })
 
   return (
-    <div id="canvas">
+    <div id="canvas" style={{userSelect:"none", drag:"none"}}>
     <img id="boardImg"
 	src={board}
-	style={{position:"absolute"}}
-	draggable={false}
+	style={{position:"absolute", zIndex:0}}
     />
     <canvas ref={canvasRef} style={{position:"absolute", zIndex:1}}/>
     </div>
