@@ -10,16 +10,10 @@ let port = process.env.PORT || 2354;
 const http = require('http');
 const server = http.createServer(app)
 
-const corsOptions ={
-   origin:'*', 
-   credentials:true,            //access-control-allow-credentials:true
-   optionSuccessStatus:200,
-}
-
 
 const { Server } = require("socket.io");
 let cors = {
-  origins: ["http://foonkychess.herokuapp.com", "https://origamimantis.github.io"],
+  origins: ["http://coalition-chess.herokuapp.com"],
   methods: ["GET", "POST"],
   credentials: true};
 
