@@ -108,6 +108,10 @@ export default function Game() {
 
       let r = "rotate(" + player2angle_snappy(getVar("playernum")) + ")"
       document.getElementById("boardImg").style.transform = r
+      
+      let rect = document.getElementsByClassName("contents")[0].getBoundingClientRect();
+      setVar("contentx", rect.left)
+      setVar("contenty", rect.top)
 
       setVar("inRoom", true)
     }

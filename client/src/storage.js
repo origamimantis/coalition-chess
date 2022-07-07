@@ -13,3 +13,5 @@ export function stateSetter(state)
   }
   return d
 }
+
+console.getVar = getVar

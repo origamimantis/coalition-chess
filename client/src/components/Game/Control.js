@@ -7,7 +7,6 @@ function relcoords(e, snap = true)
 {
   let gs = getVar("gridsize_px")
 
-
   let relx = e.pageX - getVar("contentx")
   let rely = e.pageY - getVar("contenty")
 
@@ -60,6 +59,8 @@ export function handleClick(e)
 {
   if (getVar("inRoom") !== true)
     return
+
+  console.log(relcoords(e))
   
 
   let [rx, ry] = relcoords(e)
