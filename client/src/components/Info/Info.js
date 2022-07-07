@@ -8,6 +8,7 @@ export default function Info(){
 
   return (
     <>
+    <p/>
     <h3>Schoenberg moment</h3>
     <a href="https://www.schoenberg.at/index.php/en/schoenberg-2/illuminating-as/coaltion-chess" target="_blank">
     Some website which looks kinda official
