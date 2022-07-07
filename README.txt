@@ -1,3 +1,3 @@
-tree-simulator
+coalition chess
 
-become tree
+https://www.schoenberg.at/index.php/en/schoenberg-2/illuminating-as/coaltion-chess
