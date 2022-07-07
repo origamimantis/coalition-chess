@@ -4,15 +4,15 @@ export function player2angle(num)
 {
   // yellow black green red
   if     (num == 0)
-    return Math.PI
-  else if (num == 1)
     return 0
+  else if (num == 1)
+    return Math.PI
   else if (num == 2)
     return -Math.PI/2
   else if (num == 3)
     return Math.PI/2
   else
-    return Math.PI
+    return 0
 }
 export function rot(x,y,angle, offset = 0)
 {
@@ -38,7 +38,7 @@ function drawpiece(p)
   let b_px = getVar("boardsize_px")
   let g_px = getVar("gridsize_px")
 
-  let [vx, vy] = rot(p.vx, p.vy, player2angle(getVar("playernum")), 0.5)
+  let [vx, vy] = rot(p.vx, 9-p.vy, player2angle(getVar("playernum")), 0.5)
 
   ctx.fillStyle = p.color
   ctx.fillRect((vx+0.1)*g_px, (vy+0.1)*g_px, 0.8*g_px, 0.8*g_px)
@@ -124,7 +124,9 @@ export function drawCursors()
     let ctx = getVar("ctx")
     for (let [id, xy] of Object.entries(c))
     {
-      let vxy = rot(...xy, player2angle(getVar("playernum")))
+      let rxy = [xy[0], 10-xy[1]]
+      let vxy = rot(...rxy, player2angle(getVar("playernum")))
+
       drawCursor(ctx, id, ...vxy)
     }
   })

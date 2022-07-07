@@ -64,7 +64,9 @@ export function handleClick(e)
 
   let [rx, ry] = relcoords(e)
   let gxy = boardcoords(rx,ry)
-  let rgxy = rot(...gxy, -player2angle(getVar("playernum")))
+  let [rgx,rgy] = rot(...gxy, -player2angle(getVar("playernum")))
+  let rgxy = [rgx, 10-rgy]
+
   let [id,p] = getPieceAt(...rgxy)
 
   if (getVar("held") === true)
@@ -114,7 +116,8 @@ export function handleMouseMove(e)
   setVar("mousey", ry)
 
   let bc = boardcoords(rx, ry)
-  let rbc = rot(...bc, -player2angle(getVar("playernum")))
+  let [rbx,rby] = rot(...bc, -player2angle(getVar("playernum")))
+  let rbc = [rbx, 10-rby]
 
 
   let prv = getVar("prevTime")

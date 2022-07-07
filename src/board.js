@@ -12,7 +12,6 @@ const pieces = [
 
 
 
-const number2letter = "_ABCDEFGHIJ"
 const A = 1;
 const B = 2;
 const C = 3;
@@ -110,9 +109,9 @@ class Board
     this.addPiece(G, 1, "engineer", "yellow");
     this.addPiece(H, 1, "artillery", "yellow");
 
-    this.addPiece(C, 2, "guard", "yellow");
+    this.addPiece(C, 2, "machinegun", "yellow");
     this.addPiece(D, 2, "guard", "yellow");
-    this.addPiece(E, 2, "king", "yellow");
+    this.addPiece(E, 2, "guard", "yellow");
     this.addPiece(F, 2, "machinegun", "yellow");
     this.addPiece(G, 2, "guard", "yellow");
     this.addPiece(H, 2, "machinegun", "yellow");

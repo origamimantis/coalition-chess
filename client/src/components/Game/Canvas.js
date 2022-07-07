@@ -56,7 +56,7 @@ export default function Canvas() {
     <div id="canvas">
     <img id="boardImg"
 	src={board}
-	style={{position:"absolute", zIndex:0}}
+	style={{position:"absolute"}}
 	draggable={false}
     />
     <canvas ref={canvasRef} style={{position:"absolute", zIndex:1}}/>

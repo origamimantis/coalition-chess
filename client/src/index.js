@@ -11,6 +11,7 @@ import socket from "./socket.js"
 import App from './components/App/App.js'
 
 import {handleClick, handleMouseMove} from './components/Game/Control.js'
+import {getVar} from './storage.js'
 
 
 function Rooter()
@@ -26,6 +27,8 @@ const root = createRoot(rootElement);
 root.render(<Rooter callback={() => console.log("renderered")} />);
 
 window.onbeforeunload = function () {
+   if (getVar("held") === true)
+     socket.emit("disconnectpiece", ...getVar("heldPiece"))
    socket.disconnect()
 }
 

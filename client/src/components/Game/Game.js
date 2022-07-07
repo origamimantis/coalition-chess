@@ -3,6 +3,8 @@ import {Link} from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom"
 import {getVar, setVar} from "../../storage.js"
 import socket from "../../socket.js"
+import {player2angle} from "./Draw.js"
+
 
 import UserList from "./UserList"
 import Canvas from "./Canvas"
@@ -32,6 +34,13 @@ const images = {
 
 
 
+function player2angle_snappy(num)
+{
+  let a = -Math.round(player2angle(num)/Math.PI*2)
+  return 90*a + "deg"
+}
+
+
 
 export default function Game() {
 
@@ -54,34 +63,24 @@ export default function Game() {
   
   useEffect(()=>
   {
-    function loadImg(fname)
+    function loadImg(val)
     {
       return new Promise((resolve) =>
 	{
 	  let img = new Image();
 	  img.onload = () => {resolve(img);};
-	  img.src = images[fname]
+	  img.src = val
 	})
     }
-    async function loadPieceImgs(pieces)
+    async function loadPieceImgs()
     {
       let d = {}
-      for (let piece of pieces)
+      for (let [fname, val] of Object.entries(images))
       { 
-	d[piece] = await loadImg(piece)
+	d[fname] = await loadImg(val)
       }
       return d
     }
-    const pieces = [
-  "king",
-  "plane",
-  "submarine",
-  "tank",
-  "artillery",
-  "engineer",
-  "motorcyclist",
-  "guard",
-  "machinegun"]
 
 
     async function initGame()
@@ -89,7 +88,7 @@ export default function Game() {
       getVar("updatebar").update()
       getVar("updatecan").update()
 
-      let d = await loadPieceImgs(pieces)
+      let d = await loadPieceImgs()
       setVar("imgs", d)
 
       setVar("held", false)
@@ -105,6 +104,9 @@ export default function Game() {
       })
 
       setVar("playernum", p.playernum)
+
+      let r = "rotate(" + player2angle_snappy(getVar("playernum")) + ")"
+      document.getElementById("boardImg").style.transform = r
 
       setVar("inRoom", true)
     }

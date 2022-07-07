@@ -303,6 +303,10 @@ io.on("connection", (socket)=>
     if (tx !== null)
       b.grid[ty][tx] = piece
   });
+  socket.on('disconnectpiece',(pieceid, piece)=> {
+    let p = b.pieces[pieceid]
+    p.dragging = false
+  })
 
 
   socket.on('disconnect',()=> {

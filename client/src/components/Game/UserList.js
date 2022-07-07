@@ -20,6 +20,7 @@ export default function UserList() {
 
 
   let room = getVar("room")
+  let name = getVar("name")
 
   let causeUpdate = stateSetter(useState(false))
   setVar("userlistupdate", causeUpdate)
@@ -39,7 +40,8 @@ export default function UserList() {
 
   return (
     <div id="userlist">
-      <h3>{room}</h3>
+      <h3>Room: {room}</h3>
+      <h3>{name}</h3>
       <b>Current players</b>
       <ListComp/>
     </div>
