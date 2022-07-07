@@ -31,6 +31,10 @@ console.log("port:",port)
 app.use(express.static(path.resolve(__dirname, 'client/build')));
 app.use(bodyParser.json());
 
+// heroku?
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client/build', "index.html"));
+});
 
 
 let users = {}
