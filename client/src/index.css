@@ -1,0 +1,37 @@
+@font-face {
+font-family: "Computer Modern";
+src: url('./fonts/cmunrm.ttf') format('trueType');
+}
+
+
+* {font-family: "Computer Modern"}
+
+.topbar-color { background-color: rgb(120,180,50) }
+.topbarLinks {margin-top: "40px"}
+
+body {
+	height: 100vh;
+	margin:0;
+	padding:0;
+}
+
+.root {
+}
+.contents {
+	margin-left: 2vw;
+	height: 85vh;
+	display:block;
+}
+
+hr {
+  display: block;
+  margin-top: 0;
+  margin-bottom: 0.41em;
+}
+
+footer {
+  margin-left: 2vw;
+  position:relative;
+  padding:0 0 1vh 0;
+}
+

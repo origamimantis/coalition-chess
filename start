@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# usage: ./start
+
+
+# client
+if [ $1 ]
+then
+  gnome-terminal --tab
+  cd client
+  npm start
+else
+  gnome-terminal --tab -- ./start 1
+  npm start
+fi
+
