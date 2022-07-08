@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Link} from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom"
+import React, {useEffect} from 'react';
+import { useNavigate } from "react-router-dom"
 import {getVar, setVar} from "../../storage.js"
 import socket from "../../socket.js"
 import {player2angle} from "./Draw.js"
@@ -59,7 +58,7 @@ export default function Game() {
     {
       getVar("updatebar").update()
     }
-  }, [])
+  })
 
   
   useEffect(()=>
@@ -159,7 +158,6 @@ export default function Game() {
 	order2 = reg
       }
 
-      let arr = []
       let gx = getVar("gridsize_px")
       for (let i = 0; i < 10; ++i)
       {
@@ -191,7 +189,7 @@ export default function Game() {
     initGame()
 
     return ()=>{}
-  }, [])
+  })
 
 
   let CoordLabels=()=>

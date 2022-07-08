@@ -1,5 +1,5 @@
 import React, {useRef, useEffect, useState} from "react"
-import {getVar, setVar, stateSetter} from "../../storage.js"
+import {setVar, stateSetter} from "../../storage.js"
 import socket from "../../socket.js"
 import {drawBoard, drawCursors} from "./Draw.js"
 
@@ -54,7 +54,7 @@ export default function Canvas() {
 
   return (
     <div id="canvas" style={{userSelect:"none", drag:"none", position:"absolute"}}>
-    <img id="boardImg" src={board} style={{position:"absolute", zIndex:0}}/>
+    <img id="boardImg" src={board} alt="rolled" style={{position:"absolute", zIndex:0}}/>
     <canvas ref={canvasRef} style={{position:"absolute", zIndex:1}}/>
     </div>
   )

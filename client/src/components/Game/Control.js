@@ -10,7 +10,7 @@ function relcoords(e, snap = true)
   let relx = e.pageX - getVar("contentx")
   let rely = e.pageY - getVar("contenty")
 
-  if (snap == true)
+  if (snap === true)
   {
     relx = Math.max(gs*0.25, Math.min(relx, getVar("can").width - gs*0.25))
     rely = Math.max(gs*0.25, Math.min(rely, getVar("can").height - gs*0.25))
@@ -153,7 +153,7 @@ export function handleRightClick(e)
   let [rgx,rgy] = rot(...gxy, -player2angle(getVar("playernum")))
   let rgxy = [rgx, 10-rgy]
 
-  let [id,p] = getPieceAt(...rgxy)
+  let p = getPieceAt(...rgxy)[1]
 
   if (p !== null)
   {

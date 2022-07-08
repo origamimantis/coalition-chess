@@ -1,7 +1,7 @@
-import React, {useEffect, useRef} from 'react'
+import React  from 'react'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 
-import {getVar, setVar, stateSetter} from "../../storage.js"
+import { setVar } from '../../storage.js'
 
 import Game from '../Game/Game'
 import Join from '../Join/Join'
@@ -29,7 +29,3 @@ export default function App() {
   )
 }
 
-window.onload = ()=>
-{
-  setVar("windowLoaded", true)
-}

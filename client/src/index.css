@@ -6,7 +6,7 @@ src: url('./fonts/cmunrm.ttf') format('trueType');
 
 * {font-family: "Computer Modern"}
 
-.topbar-color { background-color: rgb(120,180,50) }
+.topbar-color { background-color: #dbaef2 }
 .topbarLinks {margin-top: "40px"}
 
 body {

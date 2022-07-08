@@ -11,7 +11,7 @@ import socket from "./socket.js"
 import App from './components/App/App.js'
 
 import {handleClick, handleMouseMove} from './components/Game/Control.js'
-import {getVar} from './storage.js'
+import {setVar} from './storage.js'
 
 
 function Rooter()
@@ -25,6 +25,11 @@ const rootElement = document.getElementById("root");
 
 const root = createRoot(rootElement);
 root.render(<Rooter callback={() => console.log("renderered")} />);
+
+window.onload = ()=>
+{
+  setVar("windowLoaded", true)
+}
 
 window.onbeforeunload = function ()
 {

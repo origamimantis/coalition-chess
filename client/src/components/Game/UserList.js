@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom"
 import socket from "../../socket.js"
 import {getVar, setVar, stateSetter} from "../../storage.js"
 
