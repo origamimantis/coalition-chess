@@ -39,7 +39,7 @@ export default function UserList() {
 
 
   return (
-    <div id="userlist">
+    <div id="userlist" style={{position:"absolute", left:"70vw"}}>
       <h3>Room: {room}</h3>
       <h3>{name}</h3>
       <b>Current players</b>

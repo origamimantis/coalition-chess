@@ -38,7 +38,7 @@ const images = {
 function player2angle_snappy(num)
 {
   let a = -Math.round(player2angle(num)/Math.PI*2)
-  return 90*a + "deg"
+  return a
 }
 
 
@@ -89,14 +89,19 @@ export default function Game() {
       getVar("updatebar").update()
       getVar("updatecan").update()
 
-      let d = await loadPieceImgs()
-      setVar("imgs", d)
+      if (getVar("firstLoad") === true)
+      {
+	let d = await loadPieceImgs()
+	setVar("imgs", d)
 
-      setVar("held", false)
-      setVar("heldPiece", null)
-      setVar("prevTime", new Date())
-      setVar("lastUpdate", 0)
-      setVar("cursors", {})
+	setVar("held", false)
+	setVar("heldPiece", null)
+	setVar("prevTime", new Date())
+	setVar("lastUpdate", 0)
+	setVar("cursors", {})
+
+	setVar("firstLoad", false)
+      }
 
 
       let p = await new Promise( resolve =>
@@ -106,9 +111,76 @@ export default function Game() {
 
       setVar("playernum", p.playernum)
 
-      let r = "rotate(" + player2angle_snappy(getVar("playernum")) + ")"
-      document.getElementById("boardImg").style.transform = r
-      
+      let r = player2angle_snappy(getVar("playernum"))
+      let ro = "rotate(" + 90*r + "deg)"
+      document.getElementById("boardImg").style.transform = ro
+
+      let nums=[1,2,3,4,5,6,7,8,9,10]
+      let lets="ABCDEFGHIK"
+
+      let transform1
+      let transform2
+      // numbers on left
+      if (r%2 == 0)
+      {
+	transform1 = nums
+	transform2 = lets
+      }
+      else
+      {
+	transform1 = lets
+	transform2 = nums
+      }
+
+      let reg = (i) => {return i}
+      let rev = (i) => {return 9-i}
+
+      let order1
+      let order2
+      // numbers on left
+      if (r == 0)
+      {
+	order1 = rev
+	order2 = reg
+      }
+      else if (r == -1)
+      {
+	order1 = rev
+	order2 = rev
+      }
+      else if (r == -2)
+      {
+	order1 = reg
+	order2 = rev
+      }
+      else
+      {
+	order1 = reg
+	order2 = reg
+      }
+
+      let arr = []
+      let gx = getVar("gridsize_px")
+      for (let i = 0; i < 10; ++i)
+      {
+	let l = document.getElementById("bcl"+i)
+	l.innerHTML += transform1[i]
+	l.style.top = (order1(i) + 0.4)*gx+ "px"
+	l.style.left = "0px"
+	l.style.marginLeft = "-20px"
+	l.style.position = "absolute"
+      }
+      for (let i = 0; i < 10; ++i)
+      {
+	let l = document.getElementById("bcl"+(i+10))
+	l.innerHTML += transform2[i]
+	l.style.top = gx*10 + "px"
+	l.style.left = (order2(i)+0.4)*gx + "px"
+	l.style.position = "absolute"
+      }
+
+
+     
       let rect = document.getElementsByClassName("contents")[0].getBoundingClientRect();
       setVar("contentx", rect.left)
       setVar("contenty", rect.top)
@@ -122,14 +194,24 @@ export default function Game() {
   }, [])
 
 
+  let CoordLabels=()=>
+  {
+    let arr = []
+    for (let i = 0; i < 20; ++i)
+    {
+      arr.push(<div key={"bcl"+i} id={"bcl" + i}></div>)
+    }
+
+    return (<div className="bcl" style={{zIndex:4}}>{arr}</div>);
+  }
+
 
   return (
     <>
     <p/>
-    <div style = {{display: "grid", gridTemplateColumns: "3fr 1fr", gridGap: "20px"}}>
+      <CoordLabels/>
       <Canvas/>
       <UserList/>
-    </div>
     <Tooltip/>
     </>
   );

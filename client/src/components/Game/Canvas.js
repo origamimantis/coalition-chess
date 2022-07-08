@@ -19,9 +19,6 @@ socket.on("cursor", (a)=>
   }
 )
 
-
-
-
 export default function Canvas() {
 
   const updateCan = stateSetter(useState(false))
@@ -50,14 +47,14 @@ export default function Canvas() {
     setVar("ctx", ctx)
     setVar("boardsize_px", boardsize_px)
     setVar("gridsize_px", gridsize_px)
+
+
+
   })
 
   return (
-    <div id="canvas" style={{userSelect:"none", drag:"none"}}>
-    <img id="boardImg"
-	src={board}
-	style={{position:"absolute", zIndex:0}}
-    />
+    <div id="canvas" style={{userSelect:"none", drag:"none", position:"absolute"}}>
+    <img id="boardImg" src={board} style={{position:"absolute", zIndex:0}}/>
     <canvas ref={canvasRef} style={{position:"absolute", zIndex:1}}/>
     </div>
   )

@@ -11,6 +11,7 @@ import Topbar from '../Topbar/Topbar'
 
 export default function App() {
 
+  setVar("firstLoad", true)
   return (
     <>
     <BrowserRouter>

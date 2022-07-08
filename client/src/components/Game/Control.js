@@ -60,8 +60,9 @@ export function handleClick(e)
   if (getVar("inRoom") !== true)
     return
 
-  console.log(relcoords(e))
-  
+  // ignore topbar actions
+  if (e.pageY < getVar("contenty"))
+    return
 
   let [rx, ry] = relcoords(e)
   let gxy = boardcoords(rx,ry)
