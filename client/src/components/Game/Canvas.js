@@ -7,7 +7,6 @@ import board from "../../assets/board.png"
 
 socket.on("initial_board", (pieces) =>
   {
-    console.log(pieces)
     setVar("pieces", pieces)
 
     drawBoard()
