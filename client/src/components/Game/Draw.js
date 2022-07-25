@@ -1,5 +1,17 @@
 import {getVar, setVar} from "../../storage.js"
 
+export function color2angle(color)
+{
+  let i = 0
+  if (color == "black")
+    i = 1
+  else if (color == "green")
+    i = 2
+  else if (color == "red")
+    i = 3
+  return player2angle(i)
+}
+
 export function player2angle(num)
 {
   // yellow black green red
@@ -55,6 +67,30 @@ function drawpiece(p)
   ctx.drawImage(spr, (vx+0.1)*g_px + 0.4*g_px - 0.4*gsw, (vy + 1 - 0.1 - 0.05)*g_px - 0.8*gsh, 0.8*gsw, 0.8*gsh)
 }
 
+export function drawMovableLocation(pl, p)
+{
+  let can = getVar("can2")
+  let ctx = getVar("ctx2")
+  let b_px = getVar("boardsize_px")
+  let g_px = getVar("gridsize_px")
+
+  ctx.globalAlpha = 0.8
+
+  for (let [x,y] of pl)
+  {
+  //  ctx.fillRect((x+0.1)*g_px, (y+0.1)*g_px, 0.8*g_px, 0.8*g_px)
+    let [vx, vy] = rot(x, 9-y, player2angle(getVar("playernum")), 0.5)
+    drawCircle(ctx, (vx+0.5)*g_px, (vy+0.5)*g_px, g_px/6, "purple", p.color, g_px/16)
+  }
+  //ctx.fillRect(0,0,can.width,can.height)
+}
+
+export function clearTooltipLayer()
+{
+  let can = getVar("can2")
+  let ctx = getVar("ctx2")
+  ctx.clearRect(0,0,can.width,can.height)
+}
 
 
 export function drawBoard()

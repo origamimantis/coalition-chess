@@ -92,9 +92,12 @@ class Board
       y: c2-1,
       vx: c1-1,
       vy: c2-1,
+      ox: c1-1,
+      oy: c2-1,
       dragging: null,
       type: type,
-      color: color
+      color: color,
+      id: this._id,
     };
     this.pieces[this._id] = piece
     this._id ++

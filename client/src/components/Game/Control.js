@@ -1,6 +1,7 @@
 import {getVar, setVar} from "../../storage.js"
 import socket from "../../socket.js"
-import {player2angle, rot} from "./Draw"
+import {clearTooltipLayer, drawMovableLocation, color2angle,player2angle, rot} from "./Draw"
+import {getMovable} from "./useTooltip"
 
 
 function relcoords(e, snap = true)
@@ -97,7 +98,7 @@ export function handleClick(e)
 }
 
 
-const update_time = 50;
+//const update_time = 50;
   
 export function handleMouseMove(e)
 {
@@ -122,29 +123,29 @@ export function handleMouseMove(e)
   let rbc = [rbx, 10-rby]
 
 
-  let prv = getVar("prevTime")
-  let now = new Date()
-  let dt = now - prv
-  let newclock = getVar("lastUpdate") + dt
-  if (newclock > update_time)
-  {
-    newclock %= update_time
+ // let prv = getVar("prevTime")
+ // let now = new Date()
+ // let dt = now - prv
+ // let newclock = getVar("lastUpdate") + dt
+ // if (newclock > update_time)
+ // {
+ //   newclock %= update_time
 
     socket.emit("cursor", ...rbc)
     if (getVar("held") === true)
     {
       socket.emit("dragpiece", getVar("heldPiece")[0], ...rbc)
     }
-  }
-  setVar("prevTime", now)
-  setVar("lastUpdate", newclock)
+  //}
+  //setVar("prevTime", now)
+  //setVar("lastUpdate", newclock)
 
 }
 
 export function handleRightClick(e)
 {
   if (getVar("inRoom") !== true)
-    return
+    return null
 
   e.preventDefault()
 
@@ -157,7 +158,7 @@ export function handleRightClick(e)
 
   if (p !== null)
   {
-    return p.type
+    return p
   }
   return null
 

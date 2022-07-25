@@ -53,7 +53,7 @@ export default function Tooltip() {
   else
     return (
         <div className="tooltip-piece" style={ss} >
-	  Right-click on a piece to learn more
+	  Click on a piece for more information
         </div>
       ) 
 }

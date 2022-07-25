@@ -45,7 +45,7 @@ class Room
   {
     this.board = new b.Board();
     this.users = []
-    this.moves = []
+    this.moved = new Set()
     this.id = id;
   }
   getUserByName(name)
@@ -228,8 +228,11 @@ io.on("connection", (socket)=>
 
     let ul = userlist(socket.currentRoom)
     let i = ul.indexOf(socket)
-    res({playernum:i})
+    socket.i = i
 
+    socket.emit("initial_board", rooms[socket.currentRoom].board.pieces)
+
+    res({playernum:i})
   });
 
   socket.on('cursor',(x,y)=> {
@@ -250,6 +253,8 @@ io.on("connection", (socket)=>
     {
       b.grid[p.y][p.x] = null
     }
+    
+    rooms[socket.currentRoom].moved.add(pieceid)
 
   });
 
@@ -260,6 +265,7 @@ io.on("connection", (socket)=>
     let p = b.pieces[pieceid]
     p.vx = x - 0.5
     p.vy = y - 0.5
+    rooms[socket.currentRoom].moved.add(pieceid)
   });
   socket.on('droppiece',(pieceid, piece, x,y, o)=> {
     if (rooms[socket.currentRoom] == undefined)
@@ -299,6 +305,7 @@ io.on("connection", (socket)=>
     p.dragging = null
     if (tx !== null)
       b.grid[ty][tx] = piece
+    rooms[socket.currentRoom].moved.add(pieceid)
   });
 
   socket.on('disconnect',()=> {
@@ -325,32 +332,39 @@ io.on("connection", (socket)=>
   socket.on('yo',()=> {
     console.log("wf")
   });
-
-  setInterval(()=>{
-    if (socket.currentRoom !== undefined)
-    {
-      socket.emit("redraw_board", rooms[socket.currentRoom].board.pieces)
-
-      let a = {}
-      let i = 0
-      for (let u of rooms[socket.currentRoom].users)
-      {
-	if (u.socket === null)
-	  continue
-	else if (u.socket == socket)
-	{
-	  i += 1
-	  continue
-	}
-	a[i] = u.socket.xy
-	i += 1
-      }
-      socket.emit("cursor", a)
-    }
-
-  }, 50)
-
 });
+
+setInterval(()=>{
+  for (let room of Object.values(rooms))
+  {
+    let moved = []
+    for (let pi of room.moved)
+    {
+      moved.push(room.board.pieces[pi])
+    }
+    room.moved.clear()
+
+    let cursorMoves = {}
+    let i = 0
+    for (let u of room.users)
+    {
+      if (u.socket === null)
+	continue
+      cursorMoves[i] = u.socket.xy
+      i += 1
+    }
+    for (let u of room.users)
+    {
+      if (u.socket === null)
+	continue
+
+      u.socket.emit("redraw_board", moved)
+      u.socket.emit("cursor", cursorMoves)
+    }
+  }
+
+}, 50)
+
 
 
 // every 5 minutes, check for empty rooms and delete them
