@@ -160,6 +160,8 @@ export function drawCursors()
     let ctx = getVar("ctx")
     for (let [id, xy] of Object.entries(c))
     {
+      if (id == getVar("playernum"))
+	continue
       let rxy = [xy[0], 10-xy[1]]
       let vxy = rot(...rxy, player2angle(getVar("playernum")))
 
