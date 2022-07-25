@@ -358,8 +358,15 @@ setInterval(()=>{
       if (u.socket === null)
 	continue
 
-      u.socket.emit("redraw_board", moved)
-      u.socket.emit("cursor", cursorMoves)
+      try
+      {
+	u.socket.emit("redraw_board", moved)
+	u.socket.emit("cursor", cursorMoves)
+      }
+      catch e
+      {
+	console.log(e)
+      }
     }
   }
 
