@@ -363,7 +363,7 @@ setInterval(()=>{
 	u.socket.emit("redraw_board", moved)
 	u.socket.emit("cursor", cursorMoves)
       }
-      catch e
+      catch (e)
       {
 	console.log(e)
       }
