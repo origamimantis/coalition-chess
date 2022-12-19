@@ -13,7 +13,7 @@ const server = http.createServer(app)
 
 const { Server } = require("socket.io");
 let cors = {
-  origins: ["http://coalition-chess.herokuapp.com"],
+  origins: ["http://coalition-chess.onrender.com"],
   methods: ["GET", "POST"],
   credentials: true};
 
